@@ -1,0 +1,34 @@
+import random
+import string
+
+def generate_password(length, complexity):
+    if length < complexity:  # Minimum length should be at least as long as complexity
+        raise ValueError("Password length should be at least equal to the complexity level")
+
+    # Define character sets for different complexity levels
+    char_sets = {
+        1: string.ascii_letters,
+        2: string.ascii_letters + string.digits,
+        3: string.ascii_letters + string.digits + string.punctuation
+    }
+
+    if complexity not in char_sets:
+        raise ValueError("Invalid complexity level. Choose 1, 2, or 3.")
+
+    all_characters = char_sets[complexity]
+    password = random.choices(all_characters, k=length)
+
+    return ''.join(password)
+
+def main():
+    try:
+        length = int(input("Enter the desired length of the password: "))
+        complexity = int(input("Enter the complexity level (1: Letters only, 2: Letters and digits, 3: Letters, digits, and punctuation): "))
+        password = generate_password(length, complexity)
+        print(f"Generated password: {password}")
+    except ValueError as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
+
